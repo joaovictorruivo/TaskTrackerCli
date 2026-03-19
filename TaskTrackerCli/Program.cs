@@ -1,7 +1,10 @@
 ﻿using TaskTrackerCli;
+using System.Text.Json;
+using System.IO;
 
 List<Tarefa> tarefas = new List<Tarefa>();
 int proximoId = 1;
+
 
 while (true)
 {
@@ -29,4 +32,13 @@ while (true)
         }
     }
     else if (opcao == "3") break;
+
+    // Caminho do arquivo
+    string caminhoArquivo = "tarefas.json";
+
+    // Lógica para Salvar (pode colocar no case 3 antes de sair ou criar um case 4)
+    string jsonString = JsonSerializer.Serialize(tarefas, new JsonSerializerOptions { WriteIndented = true });
+    File.WriteAllText(caminhoArquivo, jsonString);
+
+    Console.WriteLine("Dados salvos com sucesso!");
 }
