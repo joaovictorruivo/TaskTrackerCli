@@ -9,6 +9,7 @@ while (true)
     Console.WriteLine("1. Adicionar Tarefa");
     Console.WriteLine("2. Listar Tarefas");
     Console.WriteLine("3. Sair");
+    Console.WriteLine("4. Sair");            // Sair virou a opção 4
     Console.Write("Escolha uma opção: ");
 
     var opcao = Console.ReadLine();
@@ -46,6 +47,19 @@ while (true)
         }
     }
     else if (opcao == "3")
+    {
+        Console.Write("Digite o ID da tarefa que deseja concluir: ");
+        if (int.TryParse(Console.ReadLine(), out int idParaConcluir))
+        {
+            gerenciador.Concluir(idParaConcluir);
+            Console.WriteLine("Status da tarefa atualizado com sucesso!");
+        }
+        else
+        {
+            Console.WriteLine("ID inválido! Digite apenas números.");
+        }
+    }
+    else if (opcao == "4") // Não esqueça de mudar o Sair para 4
     {
         Console.WriteLine("Saindo...");
         break;

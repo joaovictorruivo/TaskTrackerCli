@@ -35,5 +35,17 @@ namespace TaskTrackerCli
             var json = JsonSerializer.Serialize(_tarefas, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(Arquivo, json);
         }
+
+        public void Concluir(int id)
+        {
+            // Busca a tarefa pelo ID usando LINQ
+            var tarefa = _tarefas.FirstOrDefault(t => t.Id == id);
+
+            if (tarefa != null)
+            {
+                tarefa.Concluida = true;
+                Salvar(); // Salva a alteração no JSON na mesma hora!
+            }
+        }
     }
 }
