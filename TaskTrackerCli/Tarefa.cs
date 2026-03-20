@@ -1,6 +1,6 @@
 ﻿namespace TaskTrackerCli
 {
-    internal class Tarefa
+    public class Tarefa
     {
         public int Id { get; set; }
         public string Descricao { get; set; } = string.Empty;
