@@ -1,10 +1,7 @@
-﻿using TaskTrackerCli;
-using System.Text.Json;
-using System.IO;
+﻿using System;
+using TaskTrackerCli; // Garante que o Program enxerga a sua classe
 
-List<Tarefa> tarefas = new List<Tarefa>();
-int proximoId = 1;
-
+var gerenciador = new GerenciadorTarefas();
 
 while (true)
 {
@@ -18,27 +15,43 @@ while (true)
 
     if (opcao == "1")
     {
-        Console.Write("Digite a descrição: ");
+        Console.Write("Digite a descrição da tarefa: ");
         var desc = Console.ReadLine() ?? "";
-        tarefas.Add(new Tarefa { Id = proximoId++, Descricao = desc });
-        Console.WriteLine("Tarefa adicionada!");
+
+        if (!string.IsNullOrWhiteSpace(desc))
+        {
+            gerenciador.Adicionar(desc);
+            Console.WriteLine("Tarefa adicionada e salva com sucesso!");
+        }
+        else
+        {
+            Console.WriteLine("A descrição não pode ser vazia.");
+        }
     }
     else if (opcao == "2")
     {
-        Console.WriteLine("\nSua Lista:");
-        foreach (var t in tarefas)
+        Console.WriteLine("\nSua Lista de Tarefas:");
+        var lista = gerenciador.Listar();
+
+        if (lista.Count == 0)
         {
-            Console.WriteLine($"[{t.Id}] {t.Descricao} - {(t.Concluida ? "Check" : "Pendente")}");
+            Console.WriteLine("Nenhuma tarefa cadastrada ainda.");
+        }
+        else
+        {
+            foreach (var t in lista)
+            {
+                Console.WriteLine($"[{t.Id}] {t.Descricao} - {(t.Concluida ? "Concluída" : "Pendente")}");
+            }
         }
     }
-    else if (opcao == "3") break;
-
-    // Caminho do arquivo
-    string caminhoArquivo = "tarefas.json";
-
-    // Lógica para Salvar (pode colocar no case 3 antes de sair ou criar um case 4)
-    string jsonString = JsonSerializer.Serialize(tarefas, new JsonSerializerOptions { WriteIndented = true });
-    File.WriteAllText(caminhoArquivo, jsonString);
-
-    Console.WriteLine("Dados salvos com sucesso!");
+    else if (opcao == "3")
+    {
+        Console.WriteLine("Saindo...");
+        break;
+    }
+    else
+    {
+        Console.WriteLine("Opção inválida! Tente novamente.");
+    }
 }
