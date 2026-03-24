@@ -8,8 +8,9 @@ while (true)
     Console.WriteLine("\n--- GERENCIADOR DE TAREFAS ---");
     Console.WriteLine("1. Adicionar Tarefa");
     Console.WriteLine("2. Listar Tarefas");
-    Console.WriteLine("3. Sair");
-    Console.WriteLine("4. Sair");            // Sair virou a opção 4
+    Console.WriteLine("3. Concluir Tarefa");
+    Console.WriteLine("4. Excluir Tarefa"); // A nova opção entra aqui
+    Console.WriteLine("5. Sair");            // Sair passa a ser a opção 5
     Console.Write("Escolha uma opção: ");
 
     var opcao = Console.ReadLine();
@@ -59,13 +60,29 @@ while (true)
             Console.WriteLine("ID inválido! Digite apenas números.");
         }
     }
-    else if (opcao == "4") // Não esqueça de mudar o Sair para 4
+    else if (opcao == "4")
     {
-        Console.WriteLine("Saindo...");
-        break;
+        Console.Write("Digite o ID da tarefa que deseja excluir: ");
+        if (int.TryParse(Console.ReadLine(), out int idParaExcluir))
+        {
+            bool sucesso = gerenciador.Excluir(idParaExcluir);
+            if (sucesso)
+            {
+                Console.WriteLine("Tarefa excluída com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("Tarefa não encontrada na lista.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("ID inválido! Digite apenas números.");
+        }
     }
-    else
+    else if (opcao == "5") // A opção Sair agora é a 5
     {
-        Console.WriteLine("Opção inválida! Tente novamente.");
+        Console.WriteLine("A sair...");
+        break;
     }
 }

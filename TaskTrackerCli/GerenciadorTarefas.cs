@@ -47,5 +47,21 @@ namespace TaskTrackerCli
                 Salvar(); // Salva a alteração no JSON na mesma hora!
             }
         }
+
+        public bool Excluir(int id)
+        {
+            // Procuramos a tarefa na lista
+            var tarefa = _tarefas.FirstOrDefault(t => t.Id == id);
+
+            // Se a tarefa existir (não for nula), removemos e guardamos o ficheiro
+            if (tarefa != null)
+            {
+                _tarefas.Remove(tarefa);
+                Salvar(); // O ficheiro JSON é atualizado automaticamente
+                return true; // Retornamos true para saber que correu bem
+            }
+
+            return false; // Retornamos false se não encontrou o ID
+        }
     }
 }
